@@ -1,0 +1,49 @@
+# 이미지 주변에 padding을 넣고 300*300으로 변환, 저장하기.
+导入 cv2
+将 numpy 导入为 np
+从 imutils 导入 路径
+
+文件路径 =  "C: \\用户\\ haram \\ PycharmProjects \\ OpenBankProject \\ 1024data \\ 1"
+imagePaths  = 列表（路径。list_images（文件路径））
+
+大小 =  500
+
+对于 我，ImagePath 的 在 枚举（imagePaths）：
+    save_dicname  =  imagePath。拆分（' \\ '）
+    save_filename  =  "/"。加入( save_dicname [: - 2 ]) +  '/2/'  +  save_dicname [ - 1 ]
+    打印（保存文件名）
+    #打印（路径）
+    图像 =  cv2。imread ( imagePath )
+    # 打印(img.shape[1], img.shape[0])
+    打印( imagePath )
+
+    # 사로와 세로 중 큰 값을 size로 맞추고, 빈 공간에 填充物
+    if ( img . shape [ 1 ] >  size 或 img . shape [ 0 ] >  size ):
+        完美 =  1
+        如果（IMG。形状[ 1 ] >  IMG。形状[ 0 ]）：
+            理想 = 大小/ img。形状[ 1 ]
+        其他：
+            百分比 = 大小/ img。形状[ 0 ]
+
+        图像 =  cv2。调整大小( img , dsize = ( 0 , 0 ), fx = percent , fy = percent ,插值= cv2 . INTER_LINEAR )
+
+    # 이미지 범위 지정
+    y , x , h , w  = ( 0 , 0 , img . shape [ 0 ], img . shape [ 1 ])
+
+    # 그림 주변에 검은색으로 칠하기
+    w_x  = ( size - ( w - x )) / 2   # w_x = (size - 그림)을 뺀 나머지 영역 크기 [ 그림나머지/2 [그림] ꂷ림] ꂀ림림
+    h_y  = (大小- ( h - y )) / 2
+
+    if ( w_x  <  0 ):          #크기사 -면 0으로 지정.
+        w_x  =  0
+    elif ( h_y  <  0 ):
+        h_y  =  0
+
+    M  =  np。float32 ([[ 1 , 0 , w_x ], [ 0 , 1 , h_y ]])
+    img_re  =  cv2。warpAffine ( img , M , ( size , size ))
+    #打印（img_re）
+    #打印（img_re.shape）
+    # cv2.imshow("img_re", img_re)
+
+    # 이미지 저장하기
+    简历2 。imwrite（save_filename，img_re）
